@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 三段式选择器的选中块：整段填充主题色，与方向卡片的选中态同一套语言 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/accent" />
+    <corners android:radius="11dp" />
+</shape>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    横屏 / 反向横屏的主界面（res/layout-land）。
+
+    竖屏是「顶部整行自动 + 下方 2×2」，横屏高度只剩 ~390dp，那套排布会把第二排卡片
+    推到屏幕外面去。这里按同一套 Bento 语言横过来放：
+    左侧一列大竖条（自动，约 30% 宽，与右侧网格等高） + 右侧 2×2 网格（约 70% 宽）。
+    两列都吃满剩余高度，所以五张卡片一屏全部可见，不需要滚动。
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:clipToPadding="true"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <!--
+        height=match_parent 是给 fillViewport 用的：内容比屏幕矮时会被重新测成屏幕高，
+        下面 body 的权重才有可分配的空间。
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="12dp">
+
+        <!-- 顶部：标题 + 当前状态 + 菜单（标题在横屏收小一档，把高度让给卡片） -->
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="-0.02"
+                    android:text="@string/app_name"
+                    android:textColor="@color/text_primary"
+                    android:textSize="22sp" />
+
+                <!-- 状态取代原来的装饰性副标题：这一行是界面上唯一的「真话」 -->
+                <LinearLayout
+                    android:id="@+id/chipMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_pill_chip"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingBottom="5dp">
+
+                    <View
+                        android:id="@+id/chipDot"
+                        android:layout_width="7dp"
+                        android:layout_height="7dp" />
+
+                    <TextView
+                        android:id="@+id/tvChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 42dp 圆底 + 48dp 触摸区：这是整屏唯一的入口，点击区按规范给足 -->
+            <FrameLayout
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp">
+
+                <ImageButton
+                    android:id="@+id/btnMenu"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_circle_surface"
+                    android:contentDescription="@string/menu_open"
+                    android:padding="13dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_more"
+                    android:tint="@color/text_primary" />
+
+                <!-- 菜单里有待处理的事（缺悬浮窗权限 / 控制条被系统挡住）时亮起 -->
+                <View
+                    android:id="@+id/menuBadge"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/bg_badge_dot"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- 左：自动（大竖条，约 30%） + 右：四个固定方向（2×2，约 70%） -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <com.screenrotator3.app.ModeCardView
+                android:id="@+id/cardAuto"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="3"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardTall="true" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <com.screenrotator3.app.ModeCardView
+                        android:id="@+id/cardPortrait"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <com.screenrotator3.app.ModeCardView
+                        android:id="@+id/cardReversePortrait"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <com.screenrotator3.app.ModeCardView
+                        android:id="@+id/cardLandscape"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <com.screenrotator3.app.ModeCardView
+                        android:id="@+id/cardReverseLandscape"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

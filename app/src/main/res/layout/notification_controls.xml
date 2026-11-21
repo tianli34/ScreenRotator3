@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_notif_strip"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="6dp">
+
+    <ImageView
+        android:id="@+id/slot_auto"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/bg_notif_slot"
+        android:contentDescription="@string/notify_slot_desc_auto"
+        android:padding="9dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_phone_auto" />
+
+    <ImageView
+        android:id="@+id/slot_portrait"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/bg_notif_slot"
+        android:contentDescription="@string/notify_slot_desc_portrait"
+        android:padding="9dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_phone_portrait" />
+
+    <ImageView
+        android:id="@+id/slot_landscape"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/bg_notif_slot"
+        android:contentDescription="@string/notify_slot_desc_landscape"
+        android:padding="9dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_phone_landscape" />
+
+    <ImageView
+        android:id="@+id/slot_reverse_portrait"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/bg_notif_slot"
+        android:contentDescription="@string/notify_slot_desc_reverse_portrait"
+        android:padding="9dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_phone_reverse_portrait" />
+
+    <ImageView
+        android:id="@+id/slot_reverse_landscape"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/bg_notif_slot"
+        android:contentDescription="@string/notify_slot_desc_reverse_landscape"
+        android:padding="9dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_phone_reverse_landscape" />
+</LinearLayout>

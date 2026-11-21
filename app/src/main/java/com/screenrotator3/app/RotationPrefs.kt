@@ -1,4 +1,4 @@
-package com.example.screenrotator
+package com.screenrotator3.app
 
 import android.content.Context
 

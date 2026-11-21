@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    主界面的唯一「菜单」：贴底弹出的设置面板。
+    面板只承担「方向按钮之外」的事——权限、三个系统级入口、外观和说明，
+    所以主界面可以退回到一屏五个方向。
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/panel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_sheet_panel"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="14dp">
+
+    <View
+        android:id="@+id/handle"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.45"
+        android:background="@drawable/bg_sheet_handle" />
+
+    <!-- 固定表头：面板内容再多也不让它滚走。不再放「完成」按钮 ——
+         贴底面板的关闭方式就是「点面板外 / 返回键」，何况悬浮球常驻右上角，
+         按钮摆在那儿只会被它盖住一半。 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="-0.01"
+            android:text="@string/menu_title"
+            android:textColor="@color/text_primary"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@string/menu_subtitle"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <com.screenrotator3.app.MaxHeightScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 权限：只在缺失时出现，替代原来主界面顶部那条横幅 -->
+            <LinearLayout
+                android:id="@+id/cardPermission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_banner_warn"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_alert"
+                    android:tint="@color/warn" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/permission_title"
+                        android:textColor="@color/warn"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/permission_desc"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btnGrant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_pill_soft_accent"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingStart="13dp"
+                    android:paddingTop="7dp"
+                    android:paddingEnd="13dp"
+                    android:paddingBottom="7dp"
+                    android:text="@string/action_grant"
+                    android:textColor="@color/accent"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="8dp"
+                android:letterSpacing="0.08"
+                android:text="@string/section_shortcuts"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <com.screenrotator3.app.EntryRowView
+                android:id="@+id/rowNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.screenrotator3.app.EntryRowView
+                android:id="@+id/rowBall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+            <com.screenrotator3.app.EntryRowView
+                android:id="@+id/rowTile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp"
+                android:letterSpacing="0.08"
+                android:text="@string/section_appearance"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_segment_track"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/segSystem"
+                    style="@style/Widget.ScreenRotator.Segment"
+                    android:text="@string/theme_system" />
+
+                <TextView
+                    android:id="@+id/segLight"
+                    style="@style/Widget.ScreenRotator.Segment"
+                    android:text="@string/theme_light" />
+
+                <TextView
+                    android:id="@+id/segDark"
+                    style="@style/Widget.ScreenRotator.Segment"
+                    android:text="@string/theme_dark" />
+            </LinearLayout>
+
+            <!-- 语言：与外观同一套三段选择器。语言名用各自的写法展示自己，
+                 所以界面语言变了这三段仍然认得出哪一段是自己。 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp"
+                android:letterSpacing="0.08"
+                android:text="@string/section_language"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_segment_track"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/segLangSystem"
+                    style="@style/Widget.ScreenRotator.Segment"
+                    android:text="@string/language_system" />
+
+                <TextView
+                    android:id="@+id/segLangEn"
+                    style="@style/Widget.ScreenRotator.Segment"
+                    android:text="@string/language_en" />
+
+                <TextView
+                    android:id="@+id/segLangZh"
+                    style="@style/Widget.ScreenRotator.Segment"
+                    android:text="@string/language_zh" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="20dp"
+                android:letterSpacing="0.08"
+                android:text="@string/section_about"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="3dp"
+                android:text="@string/hint"
+                android:textColor="@color/text_tertiary"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </com.screenrotator3.app.MaxHeightScrollView>
+</LinearLayout>

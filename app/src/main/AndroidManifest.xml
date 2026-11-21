@@ -18,10 +18,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ScreenRotator">
 
+        <!--
+            不要给 Activity 声明 screenOrientation。
+            Activity 的方向声明本身就是系统方向仲裁里的一个请求方，会和 1×1 悬浮窗的方向请求
+            互相顶：声明固定方向时界面会压住悬浮窗的请求；声明 fullSensor 时会跟着传感器解析出
+            一个具体方向，与悬浮窗请求的方向不同就来回翻转（真机表现：转一下又弹回来，界面每
+            0.7 秒重建一次）。
+            界面需要表达方向时统一在 MainActivity.syncRequestedOrientation() 里按锁定状态调用
+            setRequestedOrientation()，保证界面与悬浮窗请求同一个方向。
+        -->
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:screenOrientation="fullSensor">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,7 +42,35 @@
             android:foregroundServiceType="specialUse">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="保持一个完全透明、不可触摸的悬浮窗口，用于向系统请求用户指定的屏幕方向。不进行屏幕录制，也不截获输入。" />
+                android:value="Keeps a fully transparent, non-touchable overlay window used to request a user-selected screen orientation. No screen capture, no input interception." />
+        </service>
+
+        <!--
+            磁贴点击后弹出的方向选择窗：全屏透明 Activity，自带暗遮罩，点空白处即关。
+            不声明 screenOrientation —— 同 MainActivity，方向仲裁的请求方只有那个 1×1 悬浮窗。
+            exported=false 不影响磁贴拉起：两条拉起路径都以本应用 / system 身份执行，
+            前者（PendingIntent，API 34+）本身就是本应用发出的，后者由 system_server 发起。
+            taskAffinity 单独指定 + excludeFromRecents：选择完就 finish，不在最近任务里留一条。
+        -->
+        <activity
+            android:name=".TileMenuActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:taskAffinity="com.screenrotator3.app.TileMenu"
+            android:theme="@style/Theme.ScreenRotator.Popup" />
+
+        <!-- 快捷设置磁贴：用户在控制中心添加「屏幕方向」后，点按弹出五个方向的悬浮选择窗 -->
+        <service
+            android:name=".RotationTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_tile_service"
+            android:label="@string/tile_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
         </service>
     </application>
 

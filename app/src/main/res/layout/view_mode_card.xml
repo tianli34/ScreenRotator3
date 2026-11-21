@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.screenrotator3.app.RotationGlyphView
+        android:id="@+id/glyph"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_gravity="center_horizontal" />
+
+    <!-- 窄卡宽度只有 ~134dp：英文的 Reverse landscape 差点放不下，
+         让它自己缩字号（11–15sp）比截断成“Reverse landsc…”更体面 -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="11sp"
+        android:autoSizeStepGranularity="1sp"
+        android:autoSizeTextType="uniform"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="11sp" />
+</merge>

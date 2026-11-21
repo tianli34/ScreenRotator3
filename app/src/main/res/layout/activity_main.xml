@@ -1,89 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    主界面只留五个方向按钮：自动（整行）+ 四个固定方向（2×2）。
+    权限、三个系统级入口、主题和说明全部收进右上角菜单（SettingsSheet）。
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:background="@color/bg"
+    android:clipToPadding="true"
+    android:fillViewport="true"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="28dp">
 
-        <TextView
+        <!-- 顶部：标题 + 当前状态 + 菜单 -->
+        <LinearLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvPermission"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="-0.02"
+                    android:text="@string/app_name"
+                    android:textColor="@color/text_primary"
+                    android:textSize="26sp" />
+
+                <!-- 状态取代原来的装饰性副标题：这一行是界面上唯一的「真话」 -->
+                <LinearLayout
+                    android:id="@+id/chipMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/bg_pill_chip"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingBottom="5dp">
+
+                    <View
+                        android:id="@+id/chipDot"
+                        android:layout_width="7dp"
+                        android:layout_height="7dp" />
+
+                    <TextView
+                        android:id="@+id/tvChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 42dp 圆底 + 48dp 触摸区：这是整屏唯一的入口，点击区按规范给足 -->
+            <FrameLayout
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp">
+
+                <ImageButton
+                    android:id="@+id/btnMenu"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_circle_surface"
+                    android:contentDescription="@string/menu_open"
+                    android:padding="13dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_more"
+                    android:tint="@color/text_primary" />
+
+                <!-- 菜单里有待处理的事（缺悬浮窗权限 / 控制条被系统挡住）时亮起 -->
+                <View
+                    android:id="@+id/menuBadge"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/bg_badge_dot"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- 自动：顶部宽卡 -->
+        <com.screenrotator3.app.ModeCardView
+            android:id="@+id/cardAuto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/permission_missing"
-            android:textColor="@color/warn"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginTop="22dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardWide="true" />
 
-        <Button
-            android:id="@+id/btnGrant"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/action_grant" />
-
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/current_mode"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/text_primary" />
-
-        <Button
-            android:id="@+id/btnAuto"
+        <!-- 四个固定方向：2×2 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/mode_auto" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnPortrait"
+            <com.screenrotator3.app.ModeCardView
+                android:id="@+id/cardPortrait"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <com.screenrotator3.app.ModeCardView
+                android:id="@+id/cardReversePortrait"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/mode_portrait" />
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnLandscape"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/mode_landscape" />
+            <com.screenrotator3.app.ModeCardView
+                android:id="@+id/cardLandscape"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true" />
 
-        <Button
-            android:id="@+id/btnReversePortrait"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/mode_reverse_portrait" />
-
-        <Button
-            android:id="@+id/btnReverseLandscape"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/mode_reverse_landscape" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/hint"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/text_secondary" />
-
+            <com.screenrotator3.app.ModeCardView
+                android:id="@+id/cardReverseLandscape"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

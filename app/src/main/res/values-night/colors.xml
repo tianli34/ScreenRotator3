@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深色主题：躺床上/夜间场景的主力外观，底色 #121212 -->
+    <color name="bg">#FF121212</color>
+    <color name="surface">#FF1B1D23</color>
+    <color name="surface_variant">#FF20232B</color>
+    <color name="stroke">#FF2C313B</color>
+    <color name="text_primary">#FFF3F5F9</color>
+    <color name="text_secondary">#FF9AA1AE</color>
+    <color name="text_tertiary">#FF78808E</color>
+
+    <color name="accent">#FF5B78FF</color>
+    <color name="accent_soft">#2E5B78FF</color>
+    <color name="on_accent">#FFFFFFFF</color>
+    <color name="on_accent_secondary">#D9FFFFFF</color>
+
+    <color name="warn">#FFFFC46B</color>
+    <color name="warn_container">#1FFFC46B</color>
+    <color name="warn_stroke">#33FFC46B</color>
+
+    <color name="icon_muted">#FF8A93A6</color>
+    <color name="switch_track">#FF333844</color>
+
+    <color name="notif_strip">#F21A1D25</color>
+    <color name="notif_slot_active">#FF5B78FF</color>
+
+    <!-- 磁贴悬浮窗的遮罩：暗色下更深一点，面板与背景的层次靠它拉开 -->
+    <color name="scrim">#B3000000</color>
+</resources>

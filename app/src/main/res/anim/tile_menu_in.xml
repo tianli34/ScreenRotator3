@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    悬浮选择窗的窗口动画：只做淡入。
+    位移交给面板自己（TileMenuActivity.playEntrance）—— 窗口动画会连全屏遮罩一起平移，
+    屏幕上会露出一条没被遮住的亮边。
+-->
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="140"
+    android:fromAlpha="0"
+    android:interpolator="@android:interpolator/accelerate_decelerate"
+    android:toAlpha="1" />

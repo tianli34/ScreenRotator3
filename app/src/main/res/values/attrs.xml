@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ModeCardView">
+        <!-- 宽卡片（竖屏下的自动）使用横向排布：图标块在左、文案居中、右侧勾选 -->
+        <attr name="cardWide" format="boolean" />
+        <!-- 竖条卡片（横屏下的自动）：纵向排布但撑满整列高度，图标更大、勾选在右上角 -->
+        <attr name="cardTall" format="boolean" />
+    </declare-styleable>
+</resources>

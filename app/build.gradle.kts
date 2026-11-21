@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.screenrotator"
+    namespace = "com.screenrotator3.app"
     compileSdk = 35
     buildToolsVersion = "35.0.1"
 
     defaultConfig {
-        applicationId = "com.example.screenrotator"
+        applicationId = "com.screenrotator3.app"
         // 目标方案只面向 Android 12（API 31）及以上
         minSdk = 31
         targetSdk = 35

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 设置面板入场：从屏幕下沿滑上来，只走 8% 的高度，避免整块面板飞过半个屏幕 -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/decelerate_cubic">
+    <translate
+        android:duration="220"
+        android:fromYDelta="8%"
+        android:toYDelta="0" />
+    <alpha
+        android:duration="150"
+        android:fromAlpha="0.5"
+        android:toAlpha="1" />
+</set>

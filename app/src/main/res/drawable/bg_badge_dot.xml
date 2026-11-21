@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 菜单按钮上的小圆点：只在「菜单里有需要处理的事」时出现（缺悬浮窗权限等） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/warn" />
+    <stroke
+        android:width="1.5dp"
+        android:color="@color/surface" />
+</shape>

@@ -1,24 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    默认语言（英文）。这里是基线文案：任何未翻译语种都会回落到本文件。
+    中文在 values-zh/strings.xml，两边 key 必须一一对应。
+-->
 <resources>
-    <string name="app_name">屏幕旋转</string>
+    <string name="app_name">Screen Rotation</string>
 
-    <string name="permission_title">需要“显示在其他应用上层”权限</string>
-    <string name="permission_granted">悬浮窗权限：已授予</string>
-    <string name="permission_missing">悬浮窗权限：未授予，请在系统设置中开启本应用的“显示在其他应用上层”</string>
-    <string name="action_grant">去授权</string>
+    <!-- Top-right menu: everything except the five orientation cards lives here -->
+    <string name="menu_open">Open menu</string>
+    <string name="menu_open_attention">Open menu, some settings need attention</string>
+    <string name="menu_title">Settings and shortcuts</string>
+    <string name="menu_subtitle">Orientation is on the main screen, the rest is here</string>
 
-    <string name="current_mode">当前方向：%1$s</string>
+    <string name="section_shortcuts">Shortcuts</string>
+    <string name="section_appearance">Appearance</string>
+    <string name="section_language">Language</string>
+    <string name="section_about">About</string>
 
-    <string name="mode_auto">自动（跟随系统）</string>
-    <string name="mode_portrait">竖屏</string>
-    <string name="mode_landscape">横屏</string>
-    <string name="mode_reverse_portrait">反向竖屏</string>
-    <string name="mode_reverse_landscape">反向横屏</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
 
-    <string name="notify_title">屏幕方向控制已启用</string>
-    <string name="notify_channel_name">屏幕方向控制</string>
-    <string name="notify_stop">自动</string>
+    <!-- Each language is shown in its own script, so it is never translated -->
+    <string name="language_system">System</string>
+    <string name="language_en" translatable="false">English</string>
+    <string name="language_zh" translatable="false">简体中文</string>
 
-    <string name="hint">说明：本工具通过透明悬浮窗向系统提交方向请求，覆盖范围取决于 Android 版本与厂商系统；
-        部分强制方向的应用、锁屏与系统界面可能不受影响。切到“自动”会移除悬浮窗，交还给系统决定方向。</string>
-    <string name="toast_permission_required">请先在系统设置中授予“显示在其他应用上层”权限</string>
+    <string name="mode_auto">Auto</string>
+    <string name="mode_portrait">Portrait</string>
+    <string name="mode_landscape">Landscape</string>
+    <string name="mode_reverse_portrait">Reverse portrait</string>
+    <string name="mode_reverse_landscape">Reverse landscape</string>
+
+    <string name="tagline_auto">System sensor</string>
+    <string name="tagline_auto_wide">Lock released, follows how you hold it</string>
+    <!-- Landscape turns Auto into a tall column, two lines at most -->
+    <string name="tagline_auto_tall">Release the lock</string>
+    <string name="tagline_portrait">Camera up</string>
+    <string name="tagline_landscape">Camera left</string>
+    <string name="tagline_reverse_portrait">Camera down</string>
+    <string name="tagline_reverse_landscape">Camera right</string>
+
+    <string name="status_auto">Following system</string>
+    <string name="status_locked">%1$s · Locked</string>
+    <!-- A direction was picked, but the overlay is not holding it any more -->
+    <string name="status_pending">%1$s · Not applied</string>
+
+    <string name="permission_title">Overlay permission missing</string>
+    <string name="permission_desc">Allow display over other apps to lock the orientation</string>
+    <string name="action_grant">Grant</string>
+
+    <string name="row_notification_title">Notification bar</string>
+    <string name="row_notification_sub">Pinned to the bar, five buttons to switch</string>
+    <string name="row_notification_sub_off">Turn on to switch direction without opening the app</string>
+    <string name="row_notification_sub_need_permission">Needs notification permission before the bar can appear</string>
+    <string name="row_notification_sub_blocked">Notifications are off, tap to allow them in settings</string>
+
+    <string name="row_ball_title">Floating ball</string>
+    <string name="row_ball_sub">A dot on the edge, tap for a five-way dial</string>
+
+    <string name="row_tile_title">Quick Settings tile</string>
+    <string name="row_tile_sub">Add the tile in Control Center to pick a direction</string>
+    <string name="row_tile_action">Add</string>
+
+    <!-- The floating picker opened by the tile -->
+    <string name="tile_menu_hint">Tap to switch, tap outside to close</string>
+    <string name="tile_menu_state_locked">%1$s locked · tap to switch</string>
+    <string name="tile_menu_state_pending">%1$s not applied · tap to relock</string>
+    <string name="tile_menu_row_selected">%1$s, selected</string>
+
+    <string name="hint">This tool asks the system to keep a screen orientation by holding a 1×1 fully transparent, non-touchable overlay window. Apps that force their own orientation, the lock screen and system UI may ignore it. Choosing Auto removes the window and returns orientation to the system.</string>
+
+    <string name="toast_permission_required">Grant the display over other apps permission first</string>
+    <string name="toast_theme_system">Theme: system</string>
+    <string name="toast_theme_light">Theme: light</string>
+    <string name="toast_theme_dark">Theme: dark</string>
+    <string name="toast_language_system">Language: system</string>
+    <string name="toast_language_en">Language: English</string>
+    <string name="toast_language_zh">Language: 简体中文</string>
+    <string name="toast_tile_added">Tile requested, confirm it in Control Center</string>
+    <string name="toast_tile_unavailable">This system cannot add it here, edit tiles in Control Center</string>
+    <string name="toast_ball_needs_permission">The floating ball needs the overlay permission too</string>
+    <string name="toast_notification_denied">Notifications not allowed, the bar will not appear, you can retry anytime</string>
+    <string name="toast_notification_blocked">The system will not ask again, allow notifications in this app settings</string>
+    <string name="toast_bar_on">Notification bar on</string>
+    <string name="toast_bar_off">Notification bar off</string>
+
+    <string name="notify_channel_name">Screen orientation</string>
+    <string name="notify_channel_desc">Stays while locked, with five quick directions</string>
+    <string name="notify_title_mode">Screen rotation · %1$s</string>
+    <string name="notify_title_auto">Following system · floating ball on</string>
+    <string name="notify_title_auto_plain">Following system</string>
+    <string name="notify_text_bar_off">Controls off · foreground service still running, re-enable in the app</string>
+    <string name="notify_slot_desc_auto">Auto</string>
+    <string name="notify_slot_desc_portrait">Portrait</string>
+    <string name="notify_slot_desc_landscape">Landscape</string>
+    <string name="notify_slot_desc_reverse_portrait">Reverse portrait</string>
+    <string name="notify_slot_desc_reverse_landscape">Reverse landscape</string>
+
+    <string name="tile_label">Rotation</string>
 </resources>

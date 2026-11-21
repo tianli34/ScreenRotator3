@@ -1,4 +1,4 @@
-package com.example.screenrotator
+package com.screenrotator3.app
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -23,6 +23,10 @@ import android.view.WindowManager
  *   透明是通过 WindowManager.LayoutParams.alpha 实现的，而不是靠隐藏 view。
  * - 方向请求写在 WindowManager.LayoutParams.screenOrientation 上，切换时更新同一个窗口的参数，
  *   而不是改 USER_ROTATION 或只改自己 Activity 的方向。
+ * - **前提**：本应用自己的 Activity 不能声明一个和这里不同的方向。Activity 的方向声明同样是
+ *   系统方向仲裁里的请求方，两者不一致时真机（Redmi / HyperOS）会出现「转一下又弹回来」，
+ *   界面每次旋转重建还会再次参与仲裁，形成来回震荡。所以 MainActivity 会用
+ *   `setRequestedOrientation()` 跟随锁定状态（见 `MainActivity.syncRequestedOrientation`）。
  * - 系统旋转显示时会同步处理输入坐标变换，本类不参与任何坐标变换、录屏或注入。
  */
 class OverlayController(context: Context) {

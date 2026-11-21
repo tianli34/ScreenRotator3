@@ -1,6 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#FF3F51B5</color>
-    <color name="text_primary">#DE000000</color>
-    <color name="text_secondary">#8A000000</color>
-    <color name="warn">#FFB00020</color>
+    <!-- 浅色主题（跟随系统亮色时使用） -->
+    <color name="bg">#FFF3F5F9</color>
+    <color name="surface">#FFFFFFFF</color>
+    <color name="surface_variant">#FFF7F8FC</color>
+    <color name="stroke">#FFE3E7EF</color>
+    <color name="text_primary">#FF0F1218</color>
+    <color name="text_secondary">#FF6B7280</color>
+    <color name="text_tertiary">#FF9AA1AE</color>
+
+    <color name="accent">#FF4C6FFF</color>
+    <color name="accent_soft">#264C6FFF</color>
+    <color name="on_accent">#FFFFFFFF</color>
+    <color name="on_accent_secondary">#CCFFFFFF</color>
+
+    <color name="warn">#FFB7791F</color>
+    <color name="warn_container">#1FB7791F</color>
+    <color name="warn_stroke">#33B7791F</color>
+
+    <color name="icon_muted">#FF98A0B3</color>
+    <color name="switch_track">#FFD9DEE8</color>
+
+    <!-- 通知栏控制条（自绘深色条，亮/暗通知下都保持高对比） -->
+    <color name="notif_strip">#F21A1D25</color>
+    <color name="notif_slot_active">#FF4C6FFF</color>
+
+    <!-- 磁贴悬浮窗的遮罩：两个主题都用暗遮罩，面板才是视觉主体 -->
+    <color name="scrim">#8A101218</color>
 </resources>

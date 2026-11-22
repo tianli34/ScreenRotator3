@@ -1,0 +1,115 @@
+- link [ref=e1]
+- link [ref=e3]
+- list
+  - listitem [level=1, ref=e4] clickable [cursor:pointer]
+    - StaticText "首页"
+  - listitem [level=1, ref=e5] clickable [cursor:pointer]
+    - StaticText "版权登记"
+  - listitem [level=1, ref=e6] clickable [cursor:pointer]
+    - StaticText "版权查询"
+  - listitem [level=1, ref=e7] clickable [cursor:pointer]
+    - StaticText "大厅网点"
+  - listitem [level=1, ref=e8] clickable [cursor:pointer]
+    - StaticText "帮助中心"
+- generic [ref=e9] clickable [cursor:pointer]
+  - StaticText "登录"
+  - StaticText "注册"
+- image "banner"
+- generic
+  - StaticText "首页> 软件登记"
+- table
+  - row
+    - cell "R11 计算机软件著作权登记申请 为原始取得或从他方继受取得的电脑软件、嵌入式软件、APP等软件申请著作权登记 立即登记" [ref=e10]
+      - StaticText "R11"
+      - heading "计算机软件著作权登记申请" [level=1, ref=e25]
+      - paragraph
+        - StaticText "为原始取得或从他方继受取得的电脑软件、嵌入式软件、APP等软件申请著作权登记"
+      - button "立即登记" [ref=e34]
+    - cell "R21 计算机软件著作权转让或专有许可合同登记申请 仅针对著作权转让合同或专有许可合同的登记 立即登记" [ref=e11]
+      - StaticText "R21"
+      - heading "计算机软件著作权转让或专有许可合同登记申请" [level=1, ref=e26]
+      - paragraph
+        - StaticText "仅针对著作权转让合同或专有许可合同的登记"
+      - button "立即登记" [ref=e35]
+    - cell "R41 软件登记事项变更或补充申请 对已登记的事项做变更或补充登记 立即登记" [ref=e12]
+      - StaticText "R41"
+      - heading "软件登记事项变更或补充申请" [level=1, ref=e27]
+      - paragraph
+        - StaticText "对已登记的事项做变更或补充登记"
+      - button "立即登记" [ref=e36]
+  - row
+    - cell "R42 撤销计算机软件登记请求 根据最终司法判决和著作权行政 处罚决定撤销软件登记 立即登记" [ref=e13]
+      - StaticText "R42"
+      - heading "撤销计算机软件登记请求" [level=1, ref=e28]
+      - paragraph
+        - StaticText "根据最终司法判决和著作权行政"
+        - LineBreak "\n"
+        - StaticText "处罚决定撤销软件登记"
+      - button "立即登记" [ref=e37]
+    - cell "R43 撤回计算机软件登记申请 在登记申请批准之前，请求撤回申请 立即登记" [ref=e14]
+      - StaticText "R43"
+      - heading "撤回计算机软件登记申请" [level=1, ref=e29]
+      - paragraph
+        - StaticText "在登记申请批准之前，请求撤回申请"
+      - button "立即登记" [ref=e38]
+    - cell "R44 撤销或放弃计算机软件登记申请 已取得登记证书的软件，申请撤销其软件，登记、合同登记 立即登记" [ref=e15]
+      - StaticText "R44"
+      - heading "撤销或放弃计算机软件登记申请" [level=1, ref=e30]
+      - paragraph
+        - StaticText "已取得登记证书的软件，申请撤销其软件，登记、合同登记"
+      - button "立即登记" [ref=e39]
+  - row
+    - cell "R45 补发或者换发软件登记证书申请 证书/证明丢失或破损以及增发副本 立即登记" [ref=e16]
+      - StaticText "R45"
+      - heading "补发或者换发软件登记证书申请" [level=1, ref=e31]
+      - paragraph
+        - StaticText "证书/证明丢失或破损以及增发副本"
+      - button "立即登记" [ref=e40]
+- heading "软件著作权质权相关登记" [level=2, ref=e2]
+- LayoutTable
+  - LayoutTableRow
+    - LayoutTableCell "R31 计算机软件著作权质权登记申请 以计算机软件著作权财产权出质，并已订立书面合同的当事人，可以申请计算机软件著作权质权登记。 立即登记"
+      - StaticText "R31"
+      - heading "计算机软件著作权质权登记申请" [level=1, ref=e32]
+      - paragraph
+        - StaticText "以计算机软件著作权财产权出质，并已订立书面合同的当事人，可以申请计算机软件著作权质权登记。"
+      - button "立即登记" [ref=e41]
+- generic
+  - list
+    - listitem [level=1]
+      - StaticText "关于我们"
+    - listitem [level=1, ref=e17] clickable [cursor:pointer]
+      - StaticText "中心简介"
+    - listitem [level=1, ref=e18] clickable [cursor:pointer]
+      - StaticText "机构设置"
+    - listitem [level=1, ref=e19] clickable [cursor:pointer]
+      - StaticText "联系我们"
+  - list
+    - listitem [level=1]
+      - StaticText "用户指南"
+    - listitem [level=1, ref=e20] clickable [cursor:pointer]
+      - StaticText "登记指南"
+    - listitem [level=1, ref=e21] clickable [cursor:pointer]
+      - StaticText "用户帮助中心"
+  - list
+    - listitem [level=1]
+      - StaticText "友情链接"
+    - listitem [level=1, ref=e22] clickable [cursor:pointer]
+      - StaticText "中国版权保护中心"
+    - listitem [level=1, ref=e23] clickable [cursor:pointer]
+      - StaticText "国家新闻出版署"
+    - listitem [level=1, ref=e24] clickable [cursor:pointer]
+      - StaticText "中华版权代理有限公司"
+  - paragraph
+    - StaticText "版权所有：中国版权保护中心"
+    - link "京ICP备09080213号" [ref=e33]
+  - paragraph
+    - StaticText "地址：北京市丰台区汽车博物馆西路9号院6号楼"
+    - StaticText "邮编：100070"
+    - StaticText "电话：010-68003887"
+  - list
+    - listitem [level=1]
+      - paragraph
+        - StaticText "中国版权服务"
+        - LineBreak "\n"
+        - StaticText "微平台"

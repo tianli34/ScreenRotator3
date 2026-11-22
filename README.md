@@ -200,7 +200,7 @@
 
 ## 构建
 
-需要 JDK 17+ 与 Android SDK（compileSdk 35、build-tools 35）。
+需要 JDK 17+ 与 Android SDK（compileSdk 36、build-tools 36）。
 
 ```bash
 ./gradlew assembleDebug

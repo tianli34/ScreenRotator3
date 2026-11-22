@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>屏幕旋转 · UI 预览</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0b0d11;color:#e8ecf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+       padding:36px 24px 56px;display:flex;flex-direction:column;align-items:center;gap:30px}
+  .stage{display:flex;gap:32px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .caption{font-size:11px;letter-spacing:.1em;color:#7d8798;text-transform:uppercase;text-align:center;margin-bottom:12px}
+  .phone{width:392px;height:820px;border-radius:44px;padding:12px;background:linear-gradient(160deg,#2a2f3a,#14171d);
+         box-shadow:0 30px 70px -20px rgba(0,0,0,.9),inset 0 0 0 1px rgba(255,255,255,.06);position:relative}
+  .screen{width:100%;height:100%;border-radius:34px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+  .statusbar{height:38px;flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:12px;font-weight:600}
+  .bar{width:16px;height:9px;border:1.4px solid currentColor;border-radius:2.5px;position:relative}
+  .bar::after{content:"";position:absolute;inset:1.6px;background:currentColor;border-radius:1px}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:86px;height:22px;border-radius:12px;background:#000;z-index:5}
+  .content{flex:1;overflow:hidden;padding:4px 20px 20px}
+
+  .dark{--bg:#121212;--surface:#1B1D23;--stroke:#2C313B;--tp:#F3F5F9;--ts:#9AA1AE;--tt:#78808E;--accent:#5B78FF;
+        --on2:rgba(255,255,255,.85);--soft:rgba(91,120,255,.18);--tile:#2A2E38;--glow:rgba(91,120,255,.45)}
+  .light{--bg:#F3F5F9;--surface:#FFFFFF;--stroke:#E3E7EF;--tp:#0F1218;--ts:#6B7280;--tt:#9AA1AE;--accent:#4C6FFF;
+         --on2:rgba(255,255,255,.85);--soft:rgba(76,111,255,.15);--tile:#DDE3EE;--glow:rgba(76,111,255,.28)}
+  .screen{background:var(--bg);color:var(--tp)}
+
+  .head{display:flex;align-items:center;gap:12px;padding-top:8px}
+  .head h1{font-size:26px;font-weight:600;letter-spacing:-.02em}
+  .head p{font-size:12px;color:var(--ts);margin-top:3px}
+  .themeBtn{margin-left:auto;width:42px;height:42px;border-radius:50%;background:var(--surface);
+            border:1px solid var(--stroke);display:grid;place-items:center;flex:0 0 auto}
+
+  .sectionHead{display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px}
+  .sectionHead .label{font-size:12px;letter-spacing:.09em;color:var(--ts)}
+  .chip{display:flex;align-items:center;gap:6px;padding:5px 11px 5px 10px;border-radius:999px;background:var(--surface);
+        border:1px solid var(--stroke);font-size:12px;color:var(--accent)}
+  .chip.auto{color:var(--ts)}
+  .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+
+  .wide{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:24px;background:var(--surface);
+        border:1px solid var(--stroke);min-height:78px}
+  .wide.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 16px 34px -16px var(--glow)}
+  .tileWrap{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--soft);flex:0 0 auto}
+  .wide.active .tileWrap{background:rgba(255,255,255,.24)}
+  .wide .txt{flex:1}
+  .wide .title{font-size:16px;font-weight:500}
+  .wide .tag{font-size:12px;color:var(--ts);margin-top:3px}
+  .wide.active .tag{color:var(--on2)}
+  .check{width:22px;height:22px;flex:0 0 auto;color:var(--tt)}
+  .wide.active .check{color:#fff}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  .card{background:var(--surface);border:1px solid var(--stroke);border-radius:22px;display:flex;flex-direction:column;
+        align-items:center;padding:16px 8px 14px;min-height:120px;color:var(--tp)}
+  .card.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 14px 30px -14px var(--glow)}
+  .card .title{font-size:15px;font-weight:500;margin-top:12px}
+  .card .tag{font-size:11px;color:var(--ts);margin-top:3px}
+  .card.active .tag{color:var(--on2)}
+
+  .rows{display:flex;flex-direction:column;gap:10px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:18px;background:var(--surface);
+       border:1px solid var(--stroke);min-height:66px}
+  .row .ic{width:38px;height:38px;border-radius:12px;background:var(--soft);display:grid;place-items:center;color:var(--accent);flex:0 0 auto}
+  .row .txt{flex:1;min-width:0}
+  .row .title{font-size:14px;font-weight:500}
+  .row .tag{font-size:11px;color:var(--ts);margin-top:2px;line-height:1.4}
+  .pillBtn{font-size:12px;font-weight:500;color:var(--accent);background:var(--soft);padding:7px 13px;border-radius:999px;white-space:nowrap}
+  .chev{color:var(--tt);flex:0 0 auto}
+  .switch{width:46px;height:26px;border-radius:999px;background:var(--tile);position:relative;flex:0 0 auto}
+  .switch i{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+  .switch.on{background:var(--accent)}
+  .switch.on i{left:23px}
+  .hint{font-size:11px;color:var(--tt);line-height:1.6;margin-top:16px}
+
+  .accessory{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
+  .panel{background:#15181e;border:1px solid #262b35;border-radius:20px;padding:18px 20px;display:flex;
+         flex-direction:column;align-items:center;gap:14px}
+  .notifStrip{display:flex;gap:6px;padding:6px;border-radius:18px;background:#1A1D25;box-shadow:0 12px 28px -16px #000}
+  .slot{width:38dp;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08)}
+  .slot.active{background:#5B78FF}
+  .dial{width:200px;height:200px;position:relative}
+  .dial .plate{position:absolute;inset:0;border-radius:50%;background:rgba(23,25,32,.96);border:1px solid rgba(255,255,255,.14)}
+  .dial .b{position:absolute;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14)}
+  .dial .b.on{background:#5B78FF}
+  .dial .c{left:50%;top:50%;transform:translate(-50%,-50%);background:#1A1D25;border:1px solid rgba(255,255,255,.28)}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div>
+    <div class="caption">默认深色 · 锁定「竖屏」</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen dark" data-theme="dark" data-locked="1"></div>
+    </div>
+  </div>
+  <div>
+    <div class="caption">浅色主题 · 跟随系统</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen light" data-theme="light" data-locked="0"></div>
+    </div>
+  </div>
+</div>
+
+<div class="accessory">
+  <div class="panel">
+    <div class="caption" style="margin:0">通知栏控制条</div>
+    <div class="notifStrip" id="notifStrip"></div>
+    <div class="caption" style="margin:0;text-transform:none;letter-spacing:0">只留图标 · 选中项实心圆底</div>
+  </div>
+  <div class="panel">
+    <div class="caption" style="margin:0">悬浮球展开（罗盘式）</div>
+    <div class="dial" id="dial"></div>
+    <div class="caption" style="margin:0;text-transform:none;letter-spacing:0">上=竖屏 下=反向竖屏 左=横屏 右=反向横屏 中心=自动</div>
+  </div>
+</div>
+
+<script>
+/* ---------- 与 GlyphPainter 完全一致的 100×100 归一化几何 ---------- */
+const PHONE = (o, a) => `
+  <rect x="29" y="9" width="42" height="82" rx="10.5" fill="none" stroke="${o}" stroke-width="5.6"/>
+  <line x1="42.5" y1="82.5" x2="57.5" y2="82.5" stroke="${o}" stroke-width="3.8" stroke-linecap="round"/>
+  <circle cx="50" cy="17.5" r="4.2" fill="${a}"/>`;
+
+const ROT = {portrait:0, reverse_portrait:180, landscape:-90, reverse_landscape:90};
+
+function glyph(mode, size, outline, anchor){
+  let inner;
+  if(mode === 'auto'){
+    inner = `<g transform="translate(50,50) scale(.58) translate(-50,-50)">${PHONE(outline, anchor)}</g>
+      <path d="M71 13.63 A42 42 0 1 1 17.83 23" fill="none" stroke="${outline}" stroke-width="5" stroke-linecap="round"/>
+      <path d="M23.62 16.11 L20.56 29.86 L10.6 21.5 Z" fill="${outline}"/>`;
+  } else {
+    inner = `<g transform="rotate(${ROT[mode]} 50 50)">${PHONE(outline, anchor)}</g>`;
+  }
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100" aria-hidden="true">${inner}</svg>`;
+}
+
+/* ---------- 屏幕模板 ---------- */
+const MODES = [
+  ['portrait','竖屏','摄像头朝上'],
+  ['reverse_portrait','反向竖屏','摄像头朝下'],
+  ['landscape','横屏','摄像头朝左'],
+  ['reverse_landscape','反向横屏','摄像头朝右']
+];
+
+const ICONS = {
+  bell:`<path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>`,
+  ball:`<circle cx="12" cy="12" r="8.8" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.9"/>`,
+  grid:`<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>`,
+  check:`<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM10 17l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>`,
+  circle:`<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>`,
+  chev:`<path d="M9.29 6.71a1 1 0 0 0 0 1.41L13.17 12l-3.88 3.88a1 1 0 1 0 1.41 1.41l4.59-4.59a1 1 0 0 0 0-1.41L10.7 6.7a1 1 0 0 0-1.41.01z"/>`,
+  contrast:`<circle cx="12" cy="12" r="8.7" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.3a8.7 8.7 0 0 1 0 17.4z"/>`,
+  sun:`<circle cx="12" cy="12" r="4.8"/><path d="M12 1.6V4M12 20v2.4M1.6 12H4M20 12h2.4M4.6 4.6 6.3 6.3M17.7 17.7l1.7 1.7M19.4 4.6 17.7 6.3M6.3 17.7 4.6 19.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`
+};
+
+function icon(name, size, cls=''){
+  return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor">${ICONS[name]}</svg>`;
+}
+
+function screenHTML(dark, locked){
+  const o = dark ? '#9AA1AE' : '#6B7280';
+  const a = dark ? '#5B78FF' : '#4C6FFF';
+  const lockMode = 'portrait';
+
+  const cards = MODES.map(([mode, name, tag])=>{
+    const active = locked && mode === lockMode;
+    return `<div class="card ${active?'active':''}">
+      ${glyph(mode, 46, active ? '#FFFFFF' : o, active ? '#FFFFFF' : a)}
+      <div class="title">${name}</div>
+      <div class="tag">${tag}</div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="statusbar"><span>9:41</span>
+    <span style="display:flex;gap:6px;align-items:center">▲▲▲ <span class="bar"></span></span></div>
+  <div class="content">
+    <div class="head">
+      <div><h1>屏幕旋转</h1><p>方向锁定 · 一键切换</p></div>
+      <div class="themeBtn">${icon('contrast',22)}</div>
+    </div>
+
+    <div class="sectionHead">
+      <span class="label">方向控制</span>
+      <span class="chip ${locked?'':'auto'}"><span class="dot"></span>${locked?'竖屏 · 已锁定':'跟随系统'}</span>
+    </div>
+
+    <div class="wide ${locked?'':'active'}">
+      <div class="tileWrap">${glyph('auto',28, locked? o : '#FFFFFF', locked? a : '#FFFFFF')}</div>
+      <div class="txt">
+        <div class="title">自动</div>
+        <div class="tag">释放锁定，方向随手机姿态变化</div>
+      </div>
+      ${icon(locked?'circle':'check',22,'check')}
+    </div>
+
+    <div class="grid">${cards}</div>
+
+    <div class="sectionHead" style="margin-bottom:10px"><span class="label">快捷入口</span></div>
+    <div class="rows">
+      <div class="row">
+        <div class="ic">${icon('bell',20)}</div>
+        <div class="txt"><div class="title">通知栏控制条</div><div class="tag">锁定后下拉通知栏，一排五个按钮直接切换</div></div>
+        ${icon('chev',18,'chev')}
+      </div>
+      <div class="row">
+        <div class="ic">${icon('ball',20)}</div>
+        <div class="txt"><div class="title">悬浮球</div><div class="tag">边缘小圆点，点开是罗盘式五向切换</div></div>
+        <div class="switch ${locked?'on':''}"><i></i></div>
+      </div>
+      <div class="row">
+        <div class="ic">${icon('grid',20)}</div>
+        <div class="txt"><div class="title">快捷设置磁贴</div><div class="tag">控制中心添加「屏幕方向」，点按循环切换</div></div>
+        <span class="pillBtn">添加</span>
+      </div>
+    </div>
+    <div class="hint">说明：本工具通过一个 1×1 完全透明、不可触摸的悬浮窗向系统提交方向请求。部分强制方向的应用、锁屏与系统界面可能不受影响。切到「自动」会移除悬浮窗，交还给系统决定方向。</div>
+  </div>`;
+}
+
+document.querySelectorAll('.screen').forEach(el=>{
+  el.innerHTML = screenHTML(el.dataset.theme === 'dark', el.dataset.locked === '1');
+});
+
+// 通知条
+const strip = document.getElementById('notifStrip');
+['auto','portrait','landscape','reverse_portrait','reverse_landscape'].forEach((m,i)=>{
+  const slot = document.createElement('div');
+  slot.className = 'slot' + (i===1?' active':'');
+  slot.innerHTML = glyph(m,20,'#FFFFFF','#FFFFFF');
+  strip.appendChild(slot);
+});
+
+// 悬浮球
+const dial = document.getElementById('dial');
+const center = document.createElement('div');
+center.className='b c'; center.innerHTML = glyph('auto',22,'#FFFFFF','#FFFFFF');
+dial.appendChild(center);
+[['portrait','on','left:50%;top:12px;transform:translateX(-50%)'],
+ ['reverse_portrait','','left:50%;bottom:12px;transform:translateX(-50%)'],
+ ['landscape','','top:50%;left:12px;transform:translateY(-50%)'],
+ ['reverse_landscape','','top:50%;right:12px;transform:translateY(-50%)']]
+ .forEach(([m,on,pos])=>{
+   const b = document.createElement('div');
+   b.className = 'b ' + on;
+   b.setAttribute('style', pos);
+   b.innerHTML = glyph(m,21,'#FFFFFF','#FFFFFF');
+   dial.appendChild(b);
+ });
+</script>
+</body>
+</html>
